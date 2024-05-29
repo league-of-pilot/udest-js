@@ -13,6 +13,7 @@ content-type: application/json
 
 {
   "content" : "mess content demo",
+  "tag": "okla",
   "other": 123
 }
 
