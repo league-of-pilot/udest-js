@@ -6,6 +6,8 @@ export class User {
   id: number
 
   @Column()
+  // Bước validate IsEmail hiện được set trong Dto
+  // Có thể thêm luôn ở đây để chặt chẽ, tùy
   email: string
 
   @Column()
