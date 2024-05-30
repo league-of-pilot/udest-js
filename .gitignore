@@ -1,4 +1,5 @@
 mock
+_ignore_*
 
 # compiled output
 /dist
