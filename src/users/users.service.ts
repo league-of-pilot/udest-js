@@ -24,4 +24,12 @@ export class UsersService {
     // Có thể save trực tiếp miễn là obj chứa đủ thông tin, ko cần tạo entities
     // return this.usersRepo.save(data)
   }
+
+  findOne() {}
+
+  findMany() {}
+
+  update() {}
+
+  remove() {}
 }

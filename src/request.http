@@ -7,3 +7,9 @@ content-type: application/json
   "password": "somepass",
   "name": "not need"
 }
+
+### Demo Save-session
+GET http://localhost:3696/demos/save-session
+
+### Demo Get-session
+GET http://localhost:3696/demos/get-session
