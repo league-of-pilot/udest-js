@@ -3,7 +3,7 @@ POST http://localhost:3696/users/signup
 content-type: application/json
 
 {
-  "email" : "demoail.com",
+  "email" : "user2@mail.com",
   "password": "somepass",
   "name": "not need"
 }
@@ -20,3 +20,14 @@ GET http://localhost:3696/users/2
 
 ### get user by email query
 GET http://localhost:3696/users?email=demo-0618@mail.com
+
+### delete user by id
+DELETE http://localhost:3696/users/2
+
+### update user by id
+PATCH http://localhost:3696/users/3
+content-type: application/json
+
+{
+  "password": "new"
+}
