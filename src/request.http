@@ -13,3 +13,10 @@ GET http://localhost:3696/demos/save-session
 
 ### Demo Get-session
 GET http://localhost:3696/demos/get-session
+
+
+### get user by id
+GET http://localhost:3696/users/2
+
+### get user by email query
+GET http://localhost:3696/users?email=demo-0618@mail.com

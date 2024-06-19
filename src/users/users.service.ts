@@ -29,7 +29,7 @@ export class UsersService {
     return this.usersRepo.findOneBy({ id })
   }
 
-  findMany(email: string) {
+  findByEmail(email: string) {
     return this.usersRepo.find({ where: { email } })
   }
 
@@ -48,7 +48,15 @@ export class UsersService {
     return this.usersRepo.save(user)
   }
 
-  remove() {}
+  // remove(entites) vs delete(id) - tương tự trên
+  // Vì trong entities đang setup hook afterRemove -> convention trong team
+  async remove(id: number) {
+    const user = await this.findOne(id)
+    if (!user) {
+      throw new Error('User not found')
+    }
+    return this.usersRepo.remove(user)
+  }
 }
 
 // Test ts type check quick - check Partial Utitlity type
