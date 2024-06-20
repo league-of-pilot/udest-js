@@ -14,17 +14,22 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { UserDto } from './dto/user.dto'
 import { UsersService } from './users.service'
+import { AuthService } from './auth.service'
 
 // Decorator implements từ NestInterceptor dùng được cho cả class lẫn method
 // Vị trí của decorator hiện trong tut này ko ảnh hưởng
 @Controller('users')
 @Serialize(UserDto)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService
+  ) {}
 
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
-    return this.usersService.create(body)
+    // return this.usersService.create(body)
+    return this.authService.signup(body)
   }
 
   // @UseInterceptors(new SerializeInterceptor(UserDto))
