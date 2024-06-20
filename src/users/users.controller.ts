@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -22,8 +23,16 @@ export class UsersController {
   }
 
   @Get('/:id')
-  getUser(@Param('id') id: string) {
-    return this.usersService.findOne(+id)
+  async getUser(@Param('id') id: string) {
+    const user = await this.usersService.findOne(+id)
+    // Việc throw trong service hay controller tùy, throw trong controller ở đây sẽ thoải mái hơn
+    // Ngoài http Nest có thể handle socket controller ...
+    // throw ngay trong service thì phải setup thêm exception filter để handle
+    // https://docs.nestjs.com/exception-filters
+    if (!user) {
+      throw new NotFoundException('User not found')
+    }
+    return user
   }
 
   @Get('')
