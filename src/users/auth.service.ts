@@ -1,6 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common'
 import { UsersService } from './users.service'
-import { convertHash } from 'src/app.utils'
+import { compareHashPass, convertHash } from 'src/app.utils'
 
 @Injectable()
 export class AuthService {
@@ -22,5 +26,22 @@ export class AuthService {
     return user
   }
 
-  signin() {}
+  async signin({ email, password }: { email: string; password: string }) {
+    const [user] = await this.userService.findByEmail(email)
+    if (!user) {
+      throw new NotFoundException('User not found')
+    }
+    const [salt, hash] = user.password.split('.')
+    const isPasswordCorrect = await compareHashPass({
+      passInput: password,
+      salt,
+      hash
+    })
+
+    if (!isPasswordCorrect) {
+      throw new BadRequestException('Wrong password')
+    }
+
+    return user
+  }
 }
