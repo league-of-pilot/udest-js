@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -7,7 +8,8 @@ import {
   Param,
   Patch,
   Post,
-  Query
+  Query,
+  UseInterceptors
 } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { CreateUserDto } from './dto/create-user.dto'
@@ -22,6 +24,8 @@ export class UsersController {
     return this.usersService.create(body)
   }
 
+  // https://docs.nestjs.com/techniques/serialization#exclude-properties
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get('/:id')
   async getUser(@Param('id') id: string) {
     const user = await this.usersService.findOne(+id)

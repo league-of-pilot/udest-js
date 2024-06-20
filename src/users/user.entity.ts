@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer'
 import {
   Entity,
   Column,
@@ -19,6 +20,10 @@ export class User {
   email: string
 
   @Column()
+  @Exclude()
+  // https://docs.nestjs.com/techniques/serialization
+  // ko hay vì áp dụng vào trực tiếp entities cấp cao nhất
+  // nếu muốn custom các properties khác tùy theo route thì ntn
   password: string
 
   // https://typeorm.io/listeners-and-subscribers
