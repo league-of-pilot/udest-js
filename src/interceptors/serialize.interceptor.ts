@@ -6,8 +6,13 @@ import {
 } from '@nestjs/common'
 import { plainToInstance } from 'class-transformer'
 import { Observable, map } from 'rxjs'
+import { ClassContructor } from 'src/app.type'
 
-export function Serialize(dto: any) {
+// vấn đề ràng type với decorator ko được ts support tốt
+// Hiện chỉ ràng buộc dto phải là class
+// Việc cố gắng ràng buộc data trùng class rất khó
+
+export function Serialize(dto: ClassContructor) {
   return UseInterceptors(new SerializeInterceptor(dto))
 }
 
