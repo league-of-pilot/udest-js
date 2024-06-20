@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  AfterInsert,
+  AfterUpdate,
+  AfterRemove,
+  BeforeInsert
+} from 'typeorm'
 
 @Entity()
 export class User {
@@ -12,4 +20,25 @@ export class User {
 
   @Column()
   password: string
+
+  // https://typeorm.io/listeners-and-subscribers
+  @BeforeInsert()
+  logBeforeInsert() {
+    console.log('Before inserted')
+  }
+
+  @AfterInsert()
+  logInsert() {
+    console.log('Inserted user', this.id)
+  }
+
+  @AfterUpdate()
+  logUpdate() {
+    console.log('Updated user', this.id)
+  }
+
+  @AfterRemove()
+  logRemove() {
+    console.log('Removed user', this.id)
+  }
 }
