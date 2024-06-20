@@ -16,16 +16,16 @@ GET http://localhost:3696/demos/get-session
 
 
 ### get user by id
-GET http://localhost:3696/users/2
+GET http://localhost:3696/users/3
 
 ### get user by email query
-GET http://localhost:3696/users?email=demo-0618@mail.com
+GET http://localhost:3696/users?email=demo-0618@mai.com
 
 ### delete user by id
 DELETE http://localhost:3696/users/2
 
 ### update user by id
-PATCH http://localhost:3696/users/3
+PATCH http://localhost:3696/users/4
 content-type: application/json
 
 {

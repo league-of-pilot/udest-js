@@ -9,11 +9,16 @@ import {
   Post,
   Query
 } from '@nestjs/common'
-import { UsersService } from './users.service'
+import { Serialize } from 'src/interceptors/serialize.interceptor'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { UserDto } from './dto/user.dto'
+import { UsersService } from './users.service'
 
+// Decorator implements từ NestInterceptor dùng được cho cả class lẫn method
+// Vị trí của decorator hiện trong tut này ko ảnh hưởng
 @Controller('users')
+@Serialize(UserDto)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -22,6 +27,10 @@ export class UsersController {
     return this.usersService.create(body)
   }
 
+  // @UseInterceptors(new SerializeInterceptor(UserDto))
+  // phải import quá nhiều -> tự viết decorator riêng cho dễ xài
+  // demo áp dụng cho toàn bộ controller luôn
+  // @Serialize(UserDto)
   @Get('/:id')
   async getUser(@Param('id') id: string) {
     const user = await this.usersService.findOne(+id)
