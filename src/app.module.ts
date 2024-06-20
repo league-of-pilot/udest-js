@@ -5,6 +5,7 @@ import { ReportsModule } from './reports/reports.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { User } from './users/user.entity'
 import { Report } from './reports/reports.entity'
+import { DemosModule } from './demos/demos.module'
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { Report } from './reports/reports.entity'
       database: '_ignore_mock/db.sqlite',
       entities: [User, Report],
       synchronize: true
-    })
+    }),
+    DemosModule
   ],
   controllers: [],
   providers: []
