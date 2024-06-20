@@ -25,11 +25,32 @@ export class UsersService {
     // return this.usersRepo.save(data)
   }
 
-  findOne() {}
+  findOne(id: number) {
+    return this.usersRepo.findOneBy({ id })
+  }
 
-  findMany() {}
+  findMany(email: string) {
+    return this.usersRepo.find({ where: { email } })
+  }
 
-  update() {}
+  async update(id: number, attrs: Partial<User>) {
+    // insert và update trong typeORM dùng với plain Obj
+    // save, remove dùng với class entities - chạy hook
+    // nhưng phải đánh đổi bằng việc fetch entities instance trước
+    // return this.usersRepo.update(id, attrs)
+
+    // C2 - fetch entities instance trước
+    const user = await this.findOne(id)
+    if (!user) {
+      throw new Error('User not found')
+    }
+    Object.assign(user, attrs)
+    return this.usersRepo.save(user)
+  }
 
   remove() {}
 }
+
+// Test ts type check quick - check Partial Utitlity type
+// const userService = new UsersService({} as any)
+// userService.update(1, { email: 'a', red: 'b' })
