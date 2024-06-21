@@ -9,8 +9,7 @@ import {
   Post,
   Query,
   Request,
-  Session,
-  UseInterceptors
+  Session
 } from '@nestjs/common'
 import { Serialize } from 'src/interceptors/serialize.interceptor'
 import { CreateUserDto } from './dto/create-user.dto'
@@ -21,13 +20,12 @@ import { AuthService } from './auth.service'
 import { SignInDto } from './dto/sign-in.dto'
 import { CurrentUser } from './current-user.decorator'
 import { User } from './user.entity'
-import { CurrentUserInterceptor } from './current-user.interceptor'
 
 // Decorator implements từ NestInterceptor dùng được cho cả class lẫn method
 // Vị trí của decorator hiện trong tut này ko ảnh hưởng
 @Controller('users')
 @Serialize(UserDto)
-@UseInterceptors(CurrentUserInterceptor)
+// @UseInterceptors(CurrentUserInterceptor)
 // Intercept soft vì findOne chỉ return null chứ ko throw error
 // route nào cần user thì sẽ qua Param Decorator để lấy ra
 export class UsersController {

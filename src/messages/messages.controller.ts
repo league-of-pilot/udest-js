@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { CreateMessageDto } from './dto/messages.dto'
 import { MessagesService } from './messages.service'
+import { CurrentUser } from 'src/users/current-user.decorator'
+import { User } from 'src/users/user.entity'
 
 @Controller('messages')
 export class MessagesController {
@@ -15,6 +17,17 @@ export class MessagesController {
   postMess(@Body() body: CreateMessageDto) {
     // return { body, content: body.content }
     return this.messageService.create(body)
+  }
+
+  @Get('meme')
+  // TODO: RE-CHECK
+  // https://docs.nestjs.com/interceptors#binding-interceptors
+  // ko dùng app.useGlobalInterceptors(),  ko export trong module của user module
+  // chỉ cần setup APP_INTERCEPTOR trong user module mà module khác vẫn dùng được ??
+  getMemeInterceptor(@CurrentUser() user: User) {
+    // getMessId() {
+    console.log('🚀 ~ meme interceptor:', user)
+    return user
   }
 
   @Get('/:id')
