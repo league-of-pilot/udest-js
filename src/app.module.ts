@@ -11,6 +11,7 @@ import { DemosModule } from './demos/demos.module'
   imports: [
     UsersModule,
     ReportsModule,
+    MessagesModule,
     // https://thriveread.com/nestjs-typeorm-sqlite/
     TypeOrmModule.forRoot({
       type: 'sqlite',

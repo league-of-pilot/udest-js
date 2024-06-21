@@ -26,7 +26,9 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    console.log('🚀 users.service L29-id findOne', id)
+    if (!id) {
+      return null
+    }
     // Nếu undefined thì vẫn trả vầ user đầu tiên ???
     return this.usersRepo.findOneBy({ id })
   }

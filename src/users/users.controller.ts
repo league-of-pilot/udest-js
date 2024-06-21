@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Request,
   Session
 } from '@nestjs/common'
 import { Serialize } from 'src/interceptors/serialize.interceptor'
@@ -17,11 +18,16 @@ import { UserDto } from './dto/user.dto'
 import { UsersService } from './users.service'
 import { AuthService } from './auth.service'
 import { SignInDto } from './dto/sign-in.dto'
+import { CurrentUser } from './current-user.decorator'
+import { User } from './user.entity'
 
 // Decorator implements từ NestInterceptor dùng được cho cả class lẫn method
 // Vị trí của decorator hiện trong tut này ko ảnh hưởng
 @Controller('users')
 @Serialize(UserDto)
+// @UseInterceptors(CurrentUserInterceptor)
+// Intercept soft vì findOne chỉ return null chứ ko throw error
+// route nào cần user thì sẽ qua Param Decorator để lấy ra
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
@@ -43,6 +49,11 @@ export class UsersController {
     return user
   }
 
+  @Post('/signout')
+  signOut(@Session() session: any) {
+    session.userId = null
+  }
+
   @Get('/whoami')
   async whoAmI(@Session() session: any) {
     if (!session.userId) {
@@ -50,10 +61,6 @@ export class UsersController {
     }
 
     const user = await this.usersService.findOne(session.userId)
-    console.log('🚀 users.controller L49-session.userId whoami', {
-      sessionUserId: session.userId,
-      user
-    })
 
     return {
       userId: session.userId,
@@ -61,6 +68,21 @@ export class UsersController {
       ...user
     }
   }
+
+  // @UseInterceptors(CurrentUserInterceptor)
+  @Get('/getMe')
+  getMe(@CurrentUser() user: User) {
+    console.count('🚀🚀 users.controller L71 render')
+    return user
+  }
+
+  // Get trực tiếp ko cần qua decorator
+  @Get('/getMeme')
+  getMeme(@Request() req: Request) {
+    console.count('🚀🚀 users.controller L77 render')
+    return req['currentUser']
+  }
+
   // @UseInterceptors(new SerializeInterceptor(UserDto))
   // phải import quá nhiều -> tự viết decorator riêng cho dễ xài
   // demo áp dụng cho toàn bộ controller luôn
