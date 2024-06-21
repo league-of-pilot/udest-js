@@ -1,14 +1,24 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards
+} from '@nestjs/common'
 import { CreateMessageDto } from './dto/messages.dto'
 import { MessagesService } from './messages.service'
 import { CurrentUser } from 'src/users/current-user.decorator'
 import { User } from 'src/users/user.entity'
+import { AuthGuard } from 'src/auth.guard'
 
 @Controller('messages')
 export class MessagesController {
   constructor(private messageService: MessagesService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   getMess() {
     return this.messageService.findAll()
   }
