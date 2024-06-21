@@ -7,7 +7,8 @@ import {
   Param,
   Patch,
   Post,
-  Query
+  Query,
+  Session
 } from '@nestjs/common'
 import { Serialize } from 'src/interceptors/serialize.interceptor'
 import { CreateUserDto } from './dto/create-user.dto'
@@ -28,16 +29,38 @@ export class UsersController {
   ) {}
 
   @Post('/signup')
-  createUser(@Body() body: CreateUserDto) {
+  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     // return this.usersService.create(body)
-    return this.authService.signup(body)
+    const user = await this.authService.signup(body)
+    session.userId = user.id
+    return user
   }
 
   @Post('/signin')
-  signin(@Body() body: SignInDto) {
-    return this.authService.signin(body)
+  async signin(@Body() body: SignInDto, @Session() session: any) {
+    const user = await this.authService.signin(body)
+    session.userId = user.id
+    return user
   }
 
+  @Get('/whoami')
+  async whoAmI(@Session() session: any) {
+    if (!session.userId) {
+      throw new NotFoundException('Not authenticated')
+    }
+
+    const user = await this.usersService.findOne(session.userId)
+    console.log('🚀 users.controller L49-session.userId whoami', {
+      sessionUserId: session.userId,
+      user
+    })
+
+    return {
+      userId: session.userId,
+      hello: 123,
+      ...user
+    }
+  }
   // @UseInterceptors(new SerializeInterceptor(UserDto))
   // phải import quá nhiều -> tự viết decorator riêng cho dễ xài
   // demo áp dụng cho toàn bộ controller luôn

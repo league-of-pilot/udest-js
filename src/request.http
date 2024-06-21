@@ -3,10 +3,24 @@ POST http://localhost:3696/users/signup
 content-type: application/json
 
 {
-  "email" : "user2@mail.com",
-  "password": "somepass",
+  "email" : "new2@mail.com",
+  "password": "123",
   "name": "not need"
 }
+
+### Login
+POST http://localhost:3696/users/signin
+content-type: application/json
+
+{
+  "email" : "new@mail.com",
+  "password": "123"
+}
+
+### whoami
+GET http://localhost:3696/users/whoami
+
+# ===========================================================
 
 ### Demo Save-session
 GET http://localhost:3696/demos/save-session
@@ -14,6 +28,7 @@ GET http://localhost:3696/demos/save-session
 ### Demo Get-session
 GET http://localhost:3696/demos/get-session
 
+# ===========================================================
 
 ### get user by id
 GET http://localhost:3696/users/3
@@ -22,7 +37,7 @@ GET http://localhost:3696/users/3
 GET http://localhost:3696/users?email=demo-0618@mai.com
 
 ### delete user by id
-DELETE http://localhost:3696/users/2
+DELETE http://localhost:3696/users/1
 
 ### update user by id
 PATCH http://localhost:3696/users/4
