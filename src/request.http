@@ -3,7 +3,7 @@ POST http://localhost:3696/users/signup
 content-type: application/json
 
 {
-  "email" : "new2@mail.com",
+  "email" : "new20202@mail.com",
   "password": "123",
   "name": "not need"
 }
@@ -13,9 +13,12 @@ POST http://localhost:3696/users/signin
 content-type: application/json
 
 {
-  "email" : "new@mail.com",
+  "email" : "guest1@mail.com",
   "password": "123"
 }
+
+### Signout
+POST http://localhost:3696/users/signout
 
 ### whoami
 GET http://localhost:3696/users/whoami
