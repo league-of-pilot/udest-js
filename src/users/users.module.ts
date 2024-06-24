@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { User } from './user.entity'
 import { AuthService } from './auth.service'
 import { CurrentUserInterceptor } from './current-user.interceptor'
-import { APP_INTERCEPTOR } from '@nestjs/core'
+// import { APP_INTERCEPTOR } from '@nestjs/core'
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -13,10 +13,14 @@ import { APP_INTERCEPTOR } from '@nestjs/core'
   providers: [
     UsersService,
     AuthService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CurrentUserInterceptor
-    }
-  ]
+    // https://docs.nestjs.com/interceptors#binding-interceptors
+    // useGlobalInterceptors ko Dependency Injection được
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: CurrentUserInterceptor
+    // },
+    CurrentUserInterceptor
+  ],
+  exports: [CurrentUserInterceptor, UsersService]
 })
 export class UsersModule {}
