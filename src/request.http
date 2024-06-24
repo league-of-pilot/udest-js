@@ -31,6 +31,7 @@ GET http://localhost:3696/users/getMe
 ### getme
 GET http://localhost:3696/users/getMeme
 
+# Với middleware thì message module ko cần phải import user module
 ### Test decorator without interceptor
 GET http://localhost:3696/messages/meme
 
