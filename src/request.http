@@ -23,6 +23,20 @@ POST http://localhost:3696/users/signout
 ### whoami
 GET http://localhost:3696/users/whoami
 
+# ================== Test interceptor ==================
+ 
+### getme
+GET http://localhost:3696/users/getMe
+
+### getme
+GET http://localhost:3696/users/getMeme
+
+### Test decorator without interceptor
+GET http://localhost:3696/messages/meme
+
+### Test decorator with interceptor
+GET http://localhost:3696/messages/meme2
+
 # ===========================================================
 
 ### Demo Save-session
