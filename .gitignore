@@ -1,5 +1,6 @@
 mock
 _ignore_*
+*.env*
 
 # compiled output
 /dist
