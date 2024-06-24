@@ -6,12 +6,14 @@ import {
   Post,
   Query,
   UseGuards
+  // UseInterceptors
 } from '@nestjs/common'
 import { CreateMessageDto } from './dto/messages.dto'
 import { MessagesService } from './messages.service'
 import { CurrentUser } from 'src/users/current-user.decorator'
 import { User } from 'src/users/user.entity'
 import { AuthGuard } from 'src/auth.guard'
+// import { CurrentUserInterceptor } from 'src/users/current-user.interceptor'
 
 @Controller('messages')
 export class MessagesController {
@@ -29,6 +31,7 @@ export class MessagesController {
     return this.messageService.create(body)
   }
 
+  // ==============================
   @Get('meme')
   // TODO: RE-CHECK
   // https://docs.nestjs.com/interceptors#binding-interceptors
@@ -39,6 +42,15 @@ export class MessagesController {
     console.log('🚀 ~ meme interceptor:', user)
     return user
   }
+
+  @Get('meme2')
+  // @UseInterceptors(CurrentUserInterceptor)
+  getTestInterceptor(@CurrentUser() user: User) {
+    // getMessId() {
+    console.log('🚀 ~ test interceptor:', user)
+    return user
+  }
+  // ==============================
 
   @Get('/:id')
   getMessId(@Param('id') idTest: string) {

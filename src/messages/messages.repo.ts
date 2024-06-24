@@ -16,8 +16,9 @@ export class MessagesRepo {
   //   public dbFullPath = path.resolve(DB_CONST.dbPath, DB_CONST.dbName)
   // ) {}
 
-  findOne(id: string) {
-    return this.findAll()[id]
+  async findOne(id: string) {
+    // return this.findAll()[id]
+    return (await this.findAll())[id]
   }
 
   async findAll() {
