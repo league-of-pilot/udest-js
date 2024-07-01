@@ -9,3 +9,6 @@ nest g mo $tp --flat
 nest g co $tp --flat
 
 ```
+
+`yarn test:watch`
+Test -> run xong nhấn p để chọn regex
